@@ -19,6 +19,9 @@ public class DashboardController {
     private final String JBossService = "jboss";
     private final String JBossHost = "localhost";
     private final int JBossPort = 8080;
+    private static final String TSM_URL = "http://localhost:8080/TAFJRestServices/resources/ofs";
+    private static final String TSM_AUTH_HEADER = "Basic dGFmai5hZG1pbjpBWElAZ3RwcXJYNC==";
+
 
     @GetMapping
     public String dashboard(Model model, HttpServletRequest request) {
@@ -33,6 +36,10 @@ public class DashboardController {
         } else {
             model.addAttribute("jbossLog", "");
         }
+
+        String tsmStatus = getTsmStatus();
+        model.addAttribute("tsmStatus", tsmStatus);
+
 
         return "dashboard";
     }
@@ -106,5 +113,51 @@ public class DashboardController {
         }
         return output.toString();
     }
+
+private String getTsmStatus() {
+    try {
+        RestTemplate restTemplate = new RestTemplate();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", TSM_AUTH_HEADER);
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setCacheControl("no-cache");
+
+        String jsonBody = "{\"ofsRequest\":\"TSA.SERVICE,/S/PROCESS,MB.OFFICER/123123,TSM \"}";
+        HttpEntity<String> requestEntity = new HttpEntity<>(jsonBody, headers);
+
+        ResponseEntity<String> responseEntity = restTemplate.postForEntity(TSM_URL, requestEntity, String.class);
+
+        if (responseEntity.getStatusCode() == HttpStatus.OK) {
+            String body = responseEntity.getBody();
+
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode root = mapper.readTree(body);
+
+            String ofsResponse = root.path("ofsResponse").asText();
+
+            return extractServiceControl(ofsResponse);
+        } else {
+            return "error: bad response";
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+        return "error";
+    }
+}
+
+    private String extractServiceControl(String ofsResponse) {
+    if (ofsResponse == null) return null;
+
+    java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("SERVICE\\.CONTROL:([^,]*)");
+    java.util.regex.Matcher matcher = pattern.matcher(ofsResponse);
+
+    if (matcher.find()) {
+        return matcher.group(1).trim();
+    }
+    return null;
+}
+
+    
 }
 
