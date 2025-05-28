@@ -94,6 +94,12 @@
     </form>
 </div>
 
+<div>
+  <h3>TSM Service</h3>
+  <p>Status: <span th:text="${tsmStatus}">Loading...</span></p>
+  <!-- Later you can add TSM start/stop buttons here -->
+</div>
+    
 <hr>
 <h2>JBoss Command Log</h2>
 <pre th:text="${jbossLog}">
