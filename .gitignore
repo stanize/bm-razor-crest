@@ -31,3 +31,11 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# General extras
+*.log
+*.class
+*.jar
+.DS_Store
+*.swp
+
