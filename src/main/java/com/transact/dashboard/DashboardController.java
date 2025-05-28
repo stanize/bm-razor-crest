@@ -147,7 +147,18 @@ private String getTsmStatus() {
 
             String ofsResponse = root.path("ofsResponse").asText();
 
-            return extractServiceControl(ofsResponse);
+            ofsResponse = extractServiceControl(ofsResponse);
+
+            if (ofsResponse == null) return "UNKNOWN";
+
+            int equalsIndex = ofsResponse.indexOf('=');
+            if (equalsIndex != -1 && equalsIndex + 1 < ofsResponse.length()) {
+                return ofsResponse.substring(equalsIndex + 1).trim();
+            }
+            return "UNKNOWN"; // or return null if you prefer
+
+            
+            
         } else {
             return "error: bad response";
         }
