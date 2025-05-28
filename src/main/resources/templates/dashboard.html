@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Transact Dashboard</title>
+    <style>
+        .status-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        form {
+            margin: 0;
+        }
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 3px solid #ccc;
+            border-top: 3px solid orange;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 1em;
+            border: 1px solid #ccc;
+            max-height: 300px;
+            overflow: auto;
+        }
+    </style>
+    <script>
+        function disableButton(form) {
+            const button = form.querySelector("button");
+            const label = button.innerText.trim().toLowerCase();
+
+            if (label === "start jboss") {
+                button.innerText = "Starting...";
+            } else if (label === "stop jboss") {
+                button.innerText = "Stopping...";
+            } else {
+                button.innerText = "Processing...";
+            }
+
+            button.disabled = true;
+        }
+
+        window.addEventListener("DOMContentLoaded", () => {
+            const status = document.getElementById("jboss-status")?.textContent;
+            if (status === "Initializing") {
+                setTimeout(() => {
+                    window.location.reload();
+                }, 5000);
+            }
+        });
+    </script>
+</head>
+<body>
+<div style="display: flex; justify-content: space-between; align-items: center;">
+    <h1>Transact Dashboard</h1>
+    <div>
+        <strong>User:</strong> <span th:text="${currentUser}">Unknown</span>
+    </div>
+</div>
+
+<div class="status-container">
+    <p>
+        JBoss Status:
+        <span id="jboss-status"
+              th:text="${jbossStatus}"
+              th:style="'color:' + (${jbossStatus} == 'Running' ? 'green' :
+                                  (${jbossStatus} == 'Initializing' ? 'orange' : 'red'))"></span>
+    </p>
+
+    <div th:if="${jbossStatus} == 'Initializing'" class="spinner" title="Initializing..."></div>
+
+    <form th:if="${jbossStatus} == 'Running'"
+          th:action="@{/transact-dashboard/stop-jboss}" method="post"
+          onsubmit="disableButton(this)">
+        <button type="submit">Stop JBoss</button>
+    </form>
+
+    <form th:if="${jbossStatus} == 'Initializing'"
+          th:action="@{/transact-dashboard}" method="get">
+        <button type="submit">Refresh</button>
+    </form>
+
+    <form th:if="${jbossStatus} == 'Stopped'"
+          th:action="@{/transact-dashboard/start-jboss}" method="post"
+          onsubmit="disableButton(this)">
+        <button type="submit">Start JBoss</button>
+    </form>
+</div>
+
+<hr>
+<h2>JBoss Command Log</h2>
+<pre th:text="${jbossLog}">
+No recent activity.
+</pre>
+
+</body>
+</html>
+

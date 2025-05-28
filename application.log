@@ -1,0 +1,21 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::               (v2.7.18)
+
+2025-05-28 16:11:15.632  INFO 146694 --- [           main] c.t.dashboard.DashboardApplication       : Starting DashboardApplication v0.0.1-SNAPSHOT using Java 11.0.25 on gcvmbmrec01 with PID 146694 (/mnt/temenos/work/dashboard/target/dashboard-0.0.1-SNAPSHOT.jar started by transactuser in /mnt/temenos/work/dashboard)
+2025-05-28 16:11:15.636  INFO 146694 --- [           main] c.t.dashboard.DashboardApplication       : No active profile set, falling back to 1 default profile: "default"
+2025-05-28 16:11:17.376  INFO 146694 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 5000 (http)
+2025-05-28 16:11:17.396  INFO 146694 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-05-28 16:11:17.396  INFO 146694 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.83]
+2025-05-28 16:11:17.577  INFO 146694 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-05-28 16:11:17.577  INFO 146694 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1766 ms
+2025-05-28 16:11:18.113  INFO 146694 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 5000 (http) with context path ''
+2025-05-28 16:11:18.131  INFO 146694 --- [           main] c.t.dashboard.DashboardApplication       : Started DashboardApplication in 3.318 seconds (JVM running for 4.085)
+2025-05-28 16:11:35.845  INFO 146694 --- [nio-5000-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-05-28 16:11:35.846  INFO 146694 --- [nio-5000-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-05-28 16:11:35.847  INFO 146694 --- [nio-5000-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
