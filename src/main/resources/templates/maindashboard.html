@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Transact Dashboard</title>
+    <style>
+        body {
+          margin: 0;
+          font-family: Arial, sans-serif;
+          display: flex;
+          height: 100vh;
+        }
+        nav.sidebar {
+          width: 220px;
+          background-color: #2f3e46;
+          color: white;
+          padding: 20px;
+          box-sizing: border-box;
+        }
+        nav.sidebar ul {
+          list-style-type: none;
+          padding: 0;
+        }
+        nav.sidebar ul li {
+          margin-bottom: 15px;
+        }
+        nav.sidebar ul li a {
+          color: white;
+          text-decoration: none;
+          font-weight: bold;
+          display: block;
+          padding: 10px;
+          border-radius: 4px;
+        }
+        nav.sidebar ul li a:hover, nav.sidebar ul li a.active {
+          background-color: #52796f;
+        }
+        main.content {
+          flex-grow: 1;
+          padding: 20px;
+          overflow-y: auto;
+          background-color: #cad2c5;
+        }
+    </style>
+</head>
+<body>
+<nav class="sidebar">
+    <ul>
+        <li><a th:href="@{/dashboard}" th:classappend="${page=='home'} ? 'active'">Home</a></li>
+        <li><a th:href="@{/dashboard/jboss}" th:classappend="${page=='jboss'} ? 'active'">JBoss Status</a></li>
+        <li><a th:href="@{/dashboard/tsm}" th:classappend="${page=='tsm'} ? 'active'">TSM Status</a></li>
+        <li><a th:href="@{/dashboard/other}" th:classappend="${page=='other'} ? 'active'">Other Info</a></li>
+    </ul>
+</nav>
+
+<main class="content" th:replace="~{::section}">
+    <!-- This is where different screen content gets loaded -->
+</main>
+</body>
+</html>
