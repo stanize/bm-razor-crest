@@ -24,7 +24,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 @Controller
-@RequestMapping("/transact-dashboard")
+@RequestMapping("/transact-dashboard-old")
 public class DashboardController {
 
     private final String JBossService = "jboss";
