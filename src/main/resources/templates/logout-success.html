@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Logged Out</title>
+  <style>
+    body {
+        background: linear-gradient(135deg, #f6f9fc, #e9efff);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+    }
+    .logout-container {
+        background-color: white;
+        padding: 2rem 3rem;
+        border-radius: 10px;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.25);
+        text-align: center;
+    }
+    .logout-container h2 {
+        margin-bottom: 1rem;
+        color: #333;
+    }
+    .logout-container p {
+        font-size: 1.2rem;
+        color: #555;
+    }
+    .logout-container a {
+        display: inline-block;
+        margin-top: 1.5rem;
+        padding: 10px 20px;
+        background-color: #5563DE;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+    .logout-container a:hover {
+        background-color: #4053c5;
+    }
+  </style>
+</head>
+<body>
+<div class="logout-container">
+  <h2>You have been logged out.</h2>
+  <p>Thank you for visiting the dashboard!</p>
+  <a th:href="@{/login}">Log In Again</a>
+</div>
+</body>
+</html>

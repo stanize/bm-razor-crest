@@ -15,4 +15,10 @@ public class LoginController {
     public String home() {
         return "dashboard-home";  // returns home.html
     }
+
+    @GetMapping("/logout-success")
+    public String logoutSuccess() {
+        return "logout-success"; // maps to logout-success.html
+    }
+
 }
