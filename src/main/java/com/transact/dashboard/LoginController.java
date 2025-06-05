@@ -13,6 +13,6 @@ public class LoginController {
 
     @GetMapping("/dashboard-home")
     public String home() {
-        return "home";  // returns home.html
+        return "dashboard-home";  // returns home.html
     }
 }
