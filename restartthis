@@ -13,7 +13,8 @@ if [ $? -ne 0 ]; then
 fi
 
 # Optional pause for manual inspection
-read -p "Build succeeded. Press Enter to continue and start the application..."
+echo "Build succeeded. Starting the application in 3 seconds..."
+sleep 3
 
 # Variables
 JAR_PATH="target/*.jar"
