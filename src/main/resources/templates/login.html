@@ -1,73 +1,75 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Login</title>
+    <title>Dashboard Home</title>
     <style>
         body {
-            background: linear-gradient(135deg, #74ABE2, #5563DE);
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f6f9fc, #e9efff);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .navbar {
+            background-color: #5563DE;
+            padding: 1rem 2rem;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar h1 {
+            margin: 0;
+            font-size: 1.8rem;
+        }
+        .logout-button {
+            background-color: white;
+            color: #5563DE;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .logout-button:hover {
+            background-color: #f0f0f0;
+        }
+        .content {
+            flex: 1;
+            padding: 2rem;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
         }
-        .login-container {
-            background-color: white;
+        .welcome-box {
+            background: white;
             padding: 2rem 3rem;
-            border-radius: 10px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.25);
-            width: 300px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
             text-align: center;
         }
-        .login-container h2 {
-            margin-bottom: 1.5rem;
+        .welcome-box h2 {
+            margin-bottom: 1rem;
             color: #333;
         }
-        .login-container input[type="text"],
-        .login-container input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            margin: 8px 0 16px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        .login-container button {
-            width: 100%;
-            padding: 10px;
-            background-color: #5563DE;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        .login-container button:hover {
-            background-color: #4053c5;
-        }
-        .error {
-            color: red;
-            margin-top: 10px;
-        }
-        .logout-msg {
-            color: green;
-            margin-top: 10px;
+        .welcome-box p {
+            font-size: 1.2rem;
+            color: #555;
         }
     </style>
 </head>
 <body>
-<div class="login-container">
-    <h2>Dashboard Login</h2>
-    <form th:action="@{/login}" method="post">
-        <input type="text" name="username" placeholder="Username" required />
-        <input type="password" name="password" placeholder="Password" required />
-        <button type="submit">Log In</button>
-    </form>
-    <div th:if="${param.error}" class="error">
-        Invalid username or password.
-    </div>
-    <div th:if="${param.logout}" class="logout-msg">
-        You have been logged out.
+<div class="navbar">
+    <h1>Dashboard</h1>
+    <a class="logout-button" th:href="@{/logout}">Logout</a>
+</div>
+<div class="content">
+    <div class="welcome-box">
+        <h2>Welcome, <span th:text="${#authentication.name}">User</span>!</h2>
+        <p>This is your dashboard homepage.</p>
     </div>
 </div>
 </body>
