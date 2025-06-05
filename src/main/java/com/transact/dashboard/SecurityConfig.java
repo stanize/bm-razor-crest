@@ -9,6 +9,8 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher; // Add this import
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 // other imports...
@@ -32,7 +34,8 @@ public class SecurityConfig {
                 .permitAll()
                 .and()
                 .logout()
-                .logoutSuccessUrl("/logout-success")  // Redirect to logout page
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))  // Allow GET for logout
+                .logoutSuccessUrl("/logout-success")
                 .permitAll();
 
         return http.build();
