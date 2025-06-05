@@ -32,6 +32,7 @@ public class SecurityConfig {
                 .permitAll()
                 .and()
                 .logout()
+                .logoutSuccessUrl("/login")  // 👈 Redirect to clean login page after logout
                 .permitAll();
 
         return http.build();
