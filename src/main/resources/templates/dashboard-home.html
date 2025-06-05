@@ -2,10 +2,75 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Dashboard Home</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f6f9fc, #e9efff);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .navbar {
+            background-color: #5563DE;
+            padding: 1rem 2rem;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar h1 {
+            margin: 0;
+            font-size: 1.8rem;
+        }
+        .logout-button {
+            background-color: white;
+            color: #5563DE;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .logout-button:hover {
+            background-color: #f0f0f0;
+        }
+        .content {
+            flex: 1;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .welcome-box {
+            background: white;
+            padding: 2rem 3rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+        .welcome-box h2 {
+            margin-bottom: 1rem;
+            color: #333;
+        }
+        .welcome-box p {
+            font-size: 1.2rem;
+            color: #555;
+        }
+    </style>
 </head>
 <body>
-<h1>Welcome to Dashboard Home!</h1>
-<p>You are logged in.</p>
-<a th:href="@{/logout}">Logout</a>
+<div class="navbar">
+    <h1>Dashboard</h1>
+    <a class="logout-button" th:href="@{/logout}">Logout</a>
+</div>
+<div class="content">
+    <div class="welcome-box">
+        <h2>Welcome, <span th:text="${#authentication.name}">User</span>!</h2>
+        <p>This is your dashboard homepage.</p>
+    </div>
+</div>
 </body>
 </html>
