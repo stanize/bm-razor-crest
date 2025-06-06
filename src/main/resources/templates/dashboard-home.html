@@ -58,6 +58,9 @@
             margin-bottom: 20px;
             color: #ffffff;
         }
+        .card form {
+            margin-bottom: 10px;
+        }
         .card button {
             padding: 10px 20px;
             background-color: #5563DE;
@@ -71,6 +74,24 @@
         .card button:hover {
             background-color: #4053c5;
             box-shadow: 0 0 10px #5563DE;
+        }
+        .response-section {
+            max-width: 1200px;
+            margin: 50px auto;
+            background-color: #2c2c3c;
+            color: #f0f0f0;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            overflow-x: auto;
+        }
+        .response-section h2 {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        .response-section pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
         }
     </style>
 </head>
@@ -89,26 +110,59 @@
     <!-- JBoss Section -->
     <div class="card">
         <h2>JBoss Management</h2>
-        <button th:onclick="|window.location.href='/jboss/start'|">Start JBoss</button>
-        <button th:onclick="|window.location.href='/jboss/stop'|">Stop JBoss</button>
-        <button th:onclick="|window.location.href='/jboss/status'|">Check Status</button>
+        <form th:action="@{/button-action}" method="get">
+            <input type="hidden" name="name" value="Start JBoss" />
+            <button type="submit">Start JBoss</button>
+        </form>
+        <form th:action="@{/button-action}" method="get">
+            <input type="hidden" name="name" value="Stop JBoss" />
+            <button type="submit">Stop JBoss</button>
+        </form>
+        <form th:action="@{/button-action}" method="get">
+            <input type="hidden" name="name" value="Check JBoss Status" />
+            <button type="submit">Check JBoss Status</button>
+        </form>
     </div>
 
     <!-- Transact Services Section -->
     <div class="card">
         <h2>Transact Services</h2>
-        <button th:onclick="|window.location.href='/services/start'|">Start Service</button>
-        <button th:onclick="|window.location.href='/services/stop'|">Stop Service</button>
-        <button th:onclick="|window.location.href='/services/status'|">Service Status</button>
+        <form th:action="@{/button-action}" method="get">
+            <input type="hidden" name="name" value="Start Service" />
+            <button type="submit">Start Service</button>
+        </form>
+        <form th:action="@{/button-action}" method="get">
+            <input type="hidden" name="name" value="Stop Service" />
+            <button type="submit">Stop Service</button>
+        </form>
+        <form th:action="@{/button-action}" method="get">
+            <input type="hidden" name="name" value="Service Status" />
+            <button type="submit">Service Status</button>
+        </form>
     </div>
 
     <!-- Testing Section -->
     <div class="card">
         <h2>Testing Utilities</h2>
-        <button th:onclick="|window.location.href='/testing/ping'|">Ping Server</button>
-        <button th:onclick="|window.location.href='/testing/health'|">Health Check</button>
-        <button th:onclick="|window.location.href='/testing/logs'|">View Logs</button>
+        <form th:action="@{/button-action}" method="get">
+            <input type="hidden" name="name" value="Ping Server" />
+            <button type="submit">Ping Server</button>
+        </form>
+        <form th:action="@{/button-action}" method="get">
+            <input type="hidden" name="name" value="Health Check" />
+            <button type="submit">Health Check</button>
+        </form>
+        <form th:action="@{/button-action}" method="get">
+            <input type="hidden" name="name" value="View Logs" />
+            <button type="submit">View Logs</button>
+        </form>
     </div>
+</div>
+
+<!-- Response Section -->
+<div class="response-section" th:if="${responseMessage}">
+    <h2>Response</h2>
+    <pre th:text="${responseMessage}"></pre>
 </div>
 
 </body>
