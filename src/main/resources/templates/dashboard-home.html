@@ -3,79 +3,73 @@
 <head>
     <title>Dashboard Home</title>
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
-
     <style>
         body {
+            background: #f0f2f5;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f6f9fc, #e9efff);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
         }
-        .navbar {
-            background-color: #5563DE;
-            padding: 1rem 2rem;
-            color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
         }
-        .navbar h1 {
-            margin: 0;
-            font-size: 1.8rem;
-        }
-        .logout-button {
-            background-color: white;
-            color: #5563DE;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 1rem;
-            cursor: pointer;
-            text-decoration: none;
-        }
-        .logout-button:hover {
-            background-color: #f0f0f0;
-        }
-        .content {
-            flex: 1;
-            padding: 2rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .welcome-box {
+        .card {
             background: white;
-            padding: 2rem 3rem;
-            border-radius: 12px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 20px;
             text-align: center;
         }
-        .welcome-box h2 {
-            margin-bottom: 1rem;
+        .card h2 {
+            margin-bottom: 20px;
             color: #333;
         }
-        .welcome-box p {
-            font-size: 1.2rem;
-            color: #555;
+        .card button {
+            padding: 10px 20px;
+            background-color: #5563DE;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin: 10px;
+            cursor: pointer;
+        }
+        .card button:hover {
+            background-color: #4053c5;
         }
     </style>
 </head>
 <body>
-<div class="navbar">
-    <h1>Dashboard</h1>
-    <form th:action="@{/logout}" method="post">
-        <button type="submit">Logout</button>
-    </form>
 
-</div>
-<div class="content">
-    <div class="welcome-box">
-        <h2>Welcome, <span th:text="${#authentication.name}">User</span>!</h2>
-        <p>This is your dashboard homepage.</p>
+<div class="container">
+    <!-- JBoss Section -->
+    <div class="card">
+        <h2>JBoss Management</h2>
+        <button th:onclick="|window.location.href='/jboss/start'|">Start JBoss</button>
+        <button th:onclick="|window.location.href='/jboss/stop'|">Stop JBoss</button>
+        <button th:onclick="|window.location.href='/jboss/status'|">Check Status</button>
+    </div>
+
+    <!-- Transact Services Section -->
+    <div class="card">
+        <h2>Transact Services</h2>
+        <button th:onclick="|window.location.href='/services/start'|">Start Service</button>
+        <button th:onclick="|window.location.href='/services/stop'|">Stop Service</button>
+        <button th:onclick="|window.location.href='/services/status'|">Service Status</button>
+    </div>
+
+    <!-- Testing Section -->
+    <div class="card">
+        <h2>Testing Utilities</h2>
+        <button th:onclick="|window.location.href='/testing/ping'|">Ping Server</button>
+        <button th:onclick="|window.location.href='/testing/health'|">Health Check</button>
+        <button th:onclick="|window.location.href='/testing/logs'|">View Logs</button>
     </div>
 </div>
+
 </body>
 </html>
