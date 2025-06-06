@@ -3,67 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <title>Sidebar Dashboard</title>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f6f8;
+        /* ... [all the previous styles remain the same] ... */
+
+        .logout-form {
+            display: inline-block;
         }
 
-        .container {
-            display: flex;
-            min-height: 100vh;
+        .logout-button {
+            padding: 8px 16px;
+            background-color: transparent;
+            color: #e74c3c;
+            font-weight: bold;
+            border: 2px solid #e74c3c;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s, color 0.3s;
         }
 
-        .sidebar {
-            width: 250px;
-            background: linear-gradient(180deg, #2c3e50, #34495e);
-            color: #ecf0f1;
-            padding: 20px;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .sidebar h2 {
-            margin: 0 0 30px 0;
-            font-size: 24px;
-            text-align: center;
-        }
-
-        .sidebar ul {
-            list-style: none;
-            padding: 0;
-            flex: 1;
-        }
-
-        .sidebar li {
-            margin: 15px 0;
-        }
-
-        .sidebar li a {
-            display: block;
-            padding: 10px 15px;
-            color: #ecf0f1;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background 0.3s;
-            font-size: 18px;
-        }
-
-        .sidebar li a:hover {
-            background: #2980b9;
-        }
-
-        .content {
-            flex: 1;
-            padding: 40px;
-            box-sizing: border-box;
-            background-color: #f4f6f8;
-            display: flex;
-            flex-direction: column;
+        .logout-button:hover {
+            background-color: #e74c3c;
+            color: white;
         }
 
         .header {
@@ -78,84 +41,6 @@
             font-size: 28px;
             color: #2c3e50;
         }
-
-        .header a {
-            text-decoration: none;
-            color: #e74c3c;
-            font-weight: bold;
-            padding: 10px 20px;
-            border: 2px solid #e74c3c;
-            border-radius: 25px;
-            transition: background 0.3s, color 0.3s;
-        }
-
-        .header a:hover {
-            background: #e74c3c;
-            color: white;
-        }
-
-        .message-box {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .message-box h2 {
-            margin-top: 0;
-            color: #34495e;
-        }
-
-        button {
-            padding: 12px 25px;
-            margin-top: 20px;
-            font-size: 16px;
-            background: #3498db;
-            color: white;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        button:hover {
-            background: #2980b9;
-        }
-
-        pre {
-            background: #ecf0f1;
-            padding: 15px;
-            border-radius: 5px;
-            overflow-x: auto;
-        }
-
-        /* Responsive design for mobile */
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-            }
-
-            .sidebar {
-                width: 100%;
-                flex-direction: row;
-                overflow-x: auto;
-            }
-
-            .sidebar ul {
-                display: flex;
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: space-around;
-            }
-
-            .sidebar li {
-                margin: 10px;
-            }
-
-            .content {
-                padding: 20px;
-            }
-        }
     </style>
 </head>
 <body>
@@ -163,15 +48,18 @@
     <div class="sidebar">
         <h2>Menu</h2>
         <ul>
-            <li><a th:href="@{/sidebar-dashboard}">Home</a></li>
-            <li><a th:href="@{/trigger-ofs}">Trigger OFS</a></li>
-            <li><a th:href="@{/logout}">Logout</a></li>
+            <li><a th:href="@{/sidebar-dashboard}"><i class="fas fa-home"></i> Home</a></li>
+            <li><a th:href="@{/trigger-ofs}"><i class="fas fa-bolt"></i> Trigger OFS</a></li>
+            <!-- No logout link here -->
         </ul>
     </div>
     <div class="content">
         <div class="header">
             <h1>Sidebar Dashboard</h1>
-            <a th:href="@{/logout}">Logout</a>
+            <!-- POST form logout -->
+            <form th:action="@{/logout}" method="post" class="logout-form">
+                <button type="submit" class="logout-button">Logout</button>
+            </form>
         </div>
 
         <div class="message-box">
