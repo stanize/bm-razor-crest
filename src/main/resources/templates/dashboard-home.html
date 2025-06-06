@@ -5,18 +5,20 @@
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <style>
         body {
-            background: #f0f2f5;
+            background: #1e1e2f;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #f0f0f0;
             margin: 0;
             padding: 0;
         }
         .navbar {
-            background-color: #5563DE;
-            color: white;
+            background-color: #29293d;
+            color: #f0f0f0;
             padding: 15px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
         }
         .navbar h1 {
             margin: 0;
@@ -26,8 +28,8 @@
             margin: 0;
         }
         .navbar button {
-            background-color: white;
-            color: #5563DE;
+            background-color: #f0f0f0;
+            color: #29293d;
             border: none;
             padding: 8px 16px;
             font-size: 14px;
@@ -46,15 +48,15 @@
             gap: 20px;
         }
         .card {
-            background: white;
+            background: #2c2c3c;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
             padding: 20px;
             text-align: center;
         }
         .card h2 {
             margin-bottom: 20px;
-            color: #333;
+            color: #ffffff;
         }
         .card button {
             padding: 10px 20px;
@@ -64,9 +66,11 @@
             border-radius: 5px;
             margin: 10px;
             cursor: pointer;
+            transition: background-color 0.3s, box-shadow 0.3s;
         }
         .card button:hover {
             background-color: #4053c5;
+            box-shadow: 0 0 10px #5563DE;
         }
     </style>
 </head>
