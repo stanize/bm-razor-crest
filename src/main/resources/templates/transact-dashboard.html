@@ -159,36 +159,40 @@
     <div class="sidebar">
         <h2>Transact</h2>
         <ul>
-            <li><a th:href="@{/transact-dashboard}"><i class="fas fa-home"></i> Home</a></li>
-            <li><a th:href="@{/trigger-ofs}"><i class="fas fa-bolt"></i> Trigger OFS</a></li>
+            <li><a href="#" onclick="loadContent('/content/jboss')"><i class="fas fa-server"></i> JBoss</a></li>
+            <li><a href="#" onclick="loadContent('/content/tsa-services')"><i class="fas fa-cogs"></i> TSA Services</a></li>
+            <li><a href="#" onclick="loadContent('/content/ofs')"><i class="fas fa-paper-plane"></i> OFS</a></li>
+            <li><a href="#" onclick="loadContent('/content/cob')"><i class="fas fa-calendar-day"></i> COB</a></li>
             <li>
-                <!-- POST Logout Form -->
                 <form th:action="@{/logout}" method="post" style="margin: 0;">
                     <button type="submit"><i class="fas fa-sign-out-alt"></i> Logout</button>
                 </form>
             </li>
         </ul>
     </div>
-    <div class="content">
+    <div class="content" id="main-content">
         <div class="header">
             <h1>Transact Dashboard</h1>
         </div>
 
-        <div class="message-box">
-            <h2>Welcome!</h2>
-            <p>Click the button below to perform an action:</p>
-
-            <form th:action="@{/button-action}" method="get">
-                <input type="hidden" name="name" value="SampleAction"/>
-                <button type="submit">Trigger Action</button>
-            </form>
-
-            <div th:if="${responseMessage}">
-                <h3>Response:</h3>
-                <pre th:text="${responseMessage}"></pre>
-            </div>
+        <div id="content-area">
+            <p>Welcome to Transact Dashboard!</p>
         </div>
     </div>
 </div>
+
+<script>
+    function loadContent(url) {
+        fetch(url)
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('content-area').innerHTML = html;
+            })
+            .catch(error => {
+                console.error('Error loading content:', error);
+                document.getElementById('content-area').innerHTML = "<p>Error loading content.</p>";
+            });
+    }
+</script>
 </body>
 </html>
