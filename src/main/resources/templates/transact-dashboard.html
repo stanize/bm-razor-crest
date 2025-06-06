@@ -64,6 +64,11 @@
             cursor: pointer;
         }
 
+        .sidebar li a.active, .sidebar li form button.active {
+            background: #1abc9c; /* Highlight color */
+            font-weight: bold;
+        }
+
         .sidebar li a:hover, .sidebar li form button:hover {
             background: #2980b9;
         }
@@ -162,12 +167,12 @@
 <body>
 <div class="container">
     <div class="sidebar">
-        <h2><a href="#" onclick="loadContent('/content/home')">Transact Dashboard</a></h2>
-        <ul>
-            <li><a href="#" onclick="loadContent('/content/jboss')"><i class="fas fa-server"></i> JBoss</a></li>
-            <li><a href="#" onclick="loadContent('/content/tsa-services')"><i class="fas fa-cogs"></i> TSA Services</a></li>
-            <li><a href="#" onclick="loadContent('/content/ofs')"><i class="fas fa-paper-plane"></i> OFS</a></li>
-            <li><a href="#" onclick="loadContent('/content/cob')"><i class="fas fa-calendar-day"></i> COB</a></li>
+        <h2><a href="#" onclick="loadContent('/content/home', this)">Transact Dashboard</a></h2>
+        <ul id="sidebar-links">
+            <li><a href="#" onclick="loadContent('/content/jboss', this)"><i class="fas fa-server"></i> JBoss</a></li>
+            <li><a href="#" onclick="loadContent('/content/tsa-services', this)"><i class="fas fa-cogs"></i> TSA Services</a></li>
+            <li><a href="#" onclick="loadContent('/content/ofs', this)"><i class="fas fa-paper-plane"></i> OFS</a></li>
+            <li><a href="#" onclick="loadContent('/content/cob', this)"><i class="fas fa-calendar-day"></i> COB</a></li>
             <li>
                 <form th:action="@{/logout}" method="post" style="margin: 0;">
                     <button type="submit"><i class="fas fa-sign-out-alt"></i> Logout</button>
@@ -187,16 +192,25 @@
 </div>
 
 <script>
-    function loadContent(url) {
+    function loadContent(url, element) {
         fetch(url)
             .then(response => response.text())
             .then(html => {
                 document.getElementById('content-area').innerHTML = html;
+                setActiveLink(element);
             })
             .catch(error => {
                 console.error('Error loading content:', error);
                 document.getElementById('content-area').innerHTML = "<p>Error loading content.</p>";
             });
+    }
+
+    function setActiveLink(clickedElement) {
+        const links = document.querySelectorAll('#sidebar-links a');
+        links.forEach(link => link.classList.remove('active'));
+        if (clickedElement) {
+            clickedElement.classList.add('active');
+        }
     }
 </script>
 </body>
