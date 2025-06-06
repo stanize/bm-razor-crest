@@ -13,25 +13,29 @@ import java.util.Map;
 @Controller
 public class DashboardMainController {
 
-    @GetMapping("/dashboard-home")
-    public String dashboardHome() {
-        return "dashboard-home";
-    }
-
-    @GetMapping("/sidebar-dashboard")
-    public String sidebarDashboard() {
-        return "sidebar-dashboard"; // Return the template sidebar-dashboard.html
-    }
-
     @GetMapping("/transact-dashboard")
     public String transactDashboard() {
-        return "transact-dashboard"; // points to transact-dashboard.html
+        return "transact-dashboard"; // Full page
     }
 
-    @GetMapping("/button-action")
-    public String handleButtonClick(Model model, String name) {
-        model.addAttribute("responseMessage", "Button clicked: " + name);
-        return "dashboard-home";
+    @GetMapping("/content/jboss")
+    public String loadJbossFragment() {
+        return "fragments/jboss-fragment";
+    }
+
+    @GetMapping("/content/tsa-services")
+    public String loadTsaServicesFragment() {
+        return "fragments/tsa-services-fragment";
+    }
+
+    @GetMapping("/content/ofs")
+    public String loadOfsFragment() {
+        return "fragments/ofs-fragment";
+    }
+
+    @GetMapping("/content/cob")
+    public String loadCobFragment() {
+        return "fragments/cob-fragment";
     }
 
     @GetMapping("/trigger-ofs")
