@@ -10,6 +10,33 @@
             margin: 0;
             padding: 0;
         }
+        .navbar {
+            background-color: #5563DE;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .navbar form {
+            margin: 0;
+        }
+        .navbar button {
+            background-color: white;
+            color: #5563DE;
+            border: none;
+            padding: 8px 16px;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .navbar button:hover {
+            background-color: #ddd;
+        }
         .container {
             max-width: 1200px;
             margin: 50px auto;
@@ -45,6 +72,15 @@
 </head>
 <body>
 
+<!-- Navigation Bar with Logout -->
+<div class="navbar">
+    <h1>Dashboard</h1>
+    <form th:action="@{/logout}" method="post">
+        <button type="submit">Logout</button>
+    </form>
+</div>
+
+<!-- Dashboard Sections -->
 <div class="container">
     <!-- JBoss Section -->
     <div class="card">
