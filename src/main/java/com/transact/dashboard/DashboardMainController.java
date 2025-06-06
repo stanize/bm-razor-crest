@@ -23,6 +23,11 @@ public class DashboardMainController {
         return "sidebar-dashboard"; // Return the template sidebar-dashboard.html
     }
 
+    @GetMapping("/transact-dashboard")
+    public String transactDashboard() {
+        return "transact-dashboard"; // points to transact-dashboard.html
+    }
+
     @GetMapping("/button-action")
     public String handleButtonClick(Model model, String name) {
         model.addAttribute("responseMessage", "Button clicked: " + name);
