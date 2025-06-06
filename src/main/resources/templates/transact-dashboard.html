@@ -35,6 +35,11 @@
             text-align: center;
         }
 
+        .sidebar h2 a {
+            color: #ecf0f1;
+            text-decoration: none;
+        }
+
         .sidebar ul {
             list-style: none;
             padding: 0;
@@ -157,7 +162,7 @@
 <body>
 <div class="container">
     <div class="sidebar">
-        <h2>Transact</h2>
+        <h2><a href="#" onclick="loadContent('/content/home')">Transact Dashboard</a></h2>
         <ul>
             <li><a href="#" onclick="loadContent('/content/jboss')"><i class="fas fa-server"></i> JBoss</a></li>
             <li><a href="#" onclick="loadContent('/content/tsa-services')"><i class="fas fa-cogs"></i> TSA Services</a></li>
