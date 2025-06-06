@@ -19,7 +19,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-@Component
+//@Component
 public class TransactAuthenticationProvider implements AuthenticationProvider {
 
     private final RestTemplate restTemplate = new RestTemplate();
