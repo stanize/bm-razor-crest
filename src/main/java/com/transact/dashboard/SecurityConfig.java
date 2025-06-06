@@ -27,10 +27,15 @@ public class SecurityConfig {
                 .permitAll()
                 .and()
                 .logout()
+                .logoutUrl("/logout")          // optional, default is /logout
+                .logoutSuccessUrl("/login?logout") // redirect to login page after logout
+                .invalidateHttpSession(true)   // invalidate session
+                .deleteCookies("JSESSIONID")   // clear session cookie
                 .permitAll();
 
         return http.build();
     }
+
 
     @Bean
     public UserDetailsService users() {
