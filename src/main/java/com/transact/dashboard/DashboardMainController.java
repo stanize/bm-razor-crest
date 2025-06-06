@@ -38,6 +38,11 @@ public class DashboardMainController {
         return "fragments/cob-fragment";
     }
 
+    @GetMapping("/content/home")
+    public String loadHomeFragment() {
+        return "fragments/home-fragment";
+    }
+
     @GetMapping("/trigger-ofs")
     public String triggerOfs(Model model) {
         try {

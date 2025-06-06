@@ -186,8 +186,36 @@
         </div>
 
         <div id="content-area">
-            <p>Welcome to Transact Dashboard!</p>
+            <!-- Home content will load here dynamically -->
         </div>
+
+        <script>
+            function loadContent(url, element) {
+                fetch(url)
+                    .then(response => response.text())
+                    .then(html => {
+                        document.getElementById('content-area').innerHTML = html;
+                        setActiveLink(element);
+                    })
+                    .catch(error => {
+                        console.error('Error loading content:', error);
+                        document.getElementById('content-area').innerHTML = "<p>Error loading content.</p>";
+                    });
+            }
+
+            function setActiveLink(clickedElement) {
+                const links = document.querySelectorAll('#sidebar-links a');
+                links.forEach(link => link.classList.remove('active'));
+                if (clickedElement) {
+                    clickedElement.classList.add('active');
+                }
+            }
+
+            // ✅ Load Home Fragment on Page Load
+            window.addEventListener('DOMContentLoaded', (event) => {
+                loadContent('/content/home');
+            });
+        </script>
     </div>
 </div>
 
