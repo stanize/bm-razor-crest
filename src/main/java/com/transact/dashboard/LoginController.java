@@ -11,11 +11,6 @@ public class LoginController {
         return "login"; // returns login.html
     }
 
-    @GetMapping("/dashboard-home")
-    public String home() {
-        return "dashboard-home";  // returns home.html
-    }
-
     @GetMapping("/logout-success")
     public String logoutSuccess() {
         return "logout-success"; // maps to logout-success.html
