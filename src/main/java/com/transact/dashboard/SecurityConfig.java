@@ -20,11 +20,11 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/login", "/css/**").permitAll()
+                .antMatchers("/transact-dashboard-login", "/css/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginPage("transact-dashboard-login")
+                .loginPage("/transact-dashboard-login")
                 .loginProcessingUrl("/transact-dashboard-login")
                 .defaultSuccessUrl("/transact-dashboard", true)
                 .permitAll()
