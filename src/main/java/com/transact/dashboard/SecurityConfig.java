@@ -9,6 +9,8 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Configuration
 @EnableWebSecurity
@@ -22,13 +24,14 @@ public class SecurityConfig {
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login")
+                .loginPage("transact-dashboard-login")
+                .loginProcessingUrl("/transact-dashboard-login")
                 .defaultSuccessUrl("/transact-dashboard", true)
                 .permitAll()
                 .and()
                 .logout()
                 .logoutUrl("/logout")          // optional, default is /logout
-                .logoutSuccessUrl("/login?logout") // redirect to login page after logout
+                .logoutSuccessUrl("/transact-dashboard-login?logout") // redirect to login page after logout
                 .invalidateHttpSession(true)   // invalidate session
                 .deleteCookies("JSESSIONID")   // clear session cookie
                 .permitAll();

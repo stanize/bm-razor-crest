@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class LoginController {
 
-    @GetMapping("/login")
+    @GetMapping("transact-dashboard-login")
     public String login() {
         return "login"; // returns login.html
     }
