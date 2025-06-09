@@ -48,15 +48,16 @@ public class TransactAuthService {
 
                 String ofsResponse = root.path("ofsResponse").asText();
 
-                ofsResponse = extractServiceControl(ofsResponse);
+                System.out.println("========= Parsed OFS Response =========");
+                System.out.println(ofsResponse);
+                System.out.println("=======================================");
 
-                if (ofsResponse == null) return "UNKNOWN";
-
-                int equalsIndex = ofsResponse.indexOf('=');
-                if (equalsIndex != -1 && equalsIndex + 1 < ofsResponse.length()) {
-                    return ofsResponse.substring(equalsIndex + 1).trim();
+// Check if response has any negative indicator
+                if (ofsResponse.contains("//-")) {
+                    return "FAILED";
+                } else {
+                    return "SUCCESS";
                 }
-                return "UNKNOWN";
             } else {
                 return "error: bad response";
             }
