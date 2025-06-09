@@ -24,9 +24,21 @@ public class TransactAuthService {
             String ofsRequest = String.format("TSA.SERVICE,/S/PROCESS,%s/%s,TSM ", username, password);
             String jsonBody = String.format("{\"ofsRequest\":\"%s\"}", ofsRequest);
 
+            System.out.println("========= OFS REQUEST =========");
+            System.out.println("POST URL: " + TRANSACT_URL);
+            System.out.println("POST Headers: " + headers);
+            System.out.println("POST Body: " + jsonBody);
+            System.out.println("================================");
+
             HttpEntity<String> requestEntity = new HttpEntity<>(jsonBody, headers);
 
             ResponseEntity<String> responseEntity = restTemplate.postForEntity(TRANSACT_URL, requestEntity, String.class);
+
+            System.out.println("========= OFS RESPONSE =========");
+            System.out.println("HTTP Status: " + responseEntity.getStatusCode());
+            System.out.println("Response Body: " + responseEntity.getBody());
+            System.out.println("=================================");
+
 
             if (responseEntity.getStatusCode() == HttpStatus.OK) {
                 String body = responseEntity.getBody();
