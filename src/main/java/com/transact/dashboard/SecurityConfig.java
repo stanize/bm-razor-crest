@@ -4,21 +4,25 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
+    private final TransactAuthenticationProvider transactAuthenticationProvider;
+
+    public SecurityConfig(TransactAuthenticationProvider transactAuthenticationProvider) {
+        this.transactAuthenticationProvider = transactAuthenticationProvider;
+    }
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                .authenticationProvider(transactAuthenticationProvider)
                 .authorizeRequests()
                 .antMatchers("/transact-dashboard-login", "/css/**").permitAll()
                 .anyRequest().authenticated()
@@ -30,24 +34,17 @@ public class SecurityConfig {
                 .permitAll()
                 .and()
                 .logout()
-                .logoutUrl("/logout")          // optional, default is /logout
-                .logoutSuccessUrl("/transact-dashboard-login?logout") // redirect to login page after logout
-                .invalidateHttpSession(true)   // invalidate session
-                .deleteCookies("JSESSIONID")   // clear session cookie
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/transact-dashboard-login?logout")
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
                 .permitAll();
 
         return http.build();
     }
 
-
     @Bean
-    public UserDetailsService users() {
-        UserDetails user = User.withDefaultPasswordEncoder()
-                .username("user")
-                .password("pass")
-                .roles("USER")
-                .build();
-
-        return new InMemoryUserDetailsManager(user);
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+        return authConfig.getAuthenticationManager();
     }
 }
