@@ -10,7 +10,7 @@ import org.springframework.web.client.RestTemplate;
 public class TransactAuthService {
 
     private static final String TRANSACT_AUTH_HEADER = "Basic xxxxxx"; // <-- your real auth header
-    private static final String TRANSACT_URL = "https://your-transact-url"; // <-- your real TSM URL
+    private static final String TRANSACT_URL = "http://localhost:8080/TAFJRestServices/resources/ofs"; // <-- your real TSM URL
 
     public String authenticateUser(String username, String password) {
         try {
