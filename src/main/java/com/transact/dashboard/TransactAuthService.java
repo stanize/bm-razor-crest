@@ -21,7 +21,7 @@ public class TransactAuthService {
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.setCacheControl("no-cache");
 
-            String ofsRequest = String.format("TSA.SERVICE,/S/PROCESS,%s/%s,TSM ", username, password);
+            String ofsRequest = String.format("ENQUIRY.SELECT,,%s/%s,%%USER,SIGN.ON.NAME:=%s", username, password, username);
             String jsonBody = String.format("{\"ofsRequest\":\"%s\"}", ofsRequest);
 
             System.out.println("========= OFS REQUEST =========");
