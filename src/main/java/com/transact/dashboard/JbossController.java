@@ -9,6 +9,9 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
+import org.springframework.web.bind.annotation.PostMapping;
+
+
 @Controller
 @RequestMapping("/content")
 public class JbossController {
@@ -72,5 +75,29 @@ public class JbossController {
         } catch (IOException e) {
             return false;
         }
+    }
+    @PostMapping("/jboss/restart")
+    public String restartJboss(Model model) {
+        executeCommand("sudo systemctl restart jboss");
+
+        // Wait briefly for JBoss to come back up
+        try {
+            Thread.sleep(2000); // 2 seconds (optional, gives the socket time to open)
+        } catch (InterruptedException ignored) {}
+
+        // Redirect back to refresh the status
+        return "redirect:/content/jboss";
+    }
+
+    private String executeCommand(String command) {
+        StringBuilder output = new StringBuilder();
+        try {
+            ProcessBuilder builder = new ProcessBuilder("bash", "-c", command);
+            Process process = builder.start();
+            process.waitFor();
+        } catch (IOException | InterruptedException e) {
+            output.append("Error: ").append(e.getMessage());
+        }
+        return output.toString();
     }
 }
