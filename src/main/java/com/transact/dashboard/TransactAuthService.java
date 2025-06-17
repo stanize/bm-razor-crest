@@ -34,10 +34,10 @@ public class TransactAuthService {
 
             ResponseEntity<String> responseEntity = restTemplate.postForEntity(TRANSACT_URL, requestEntity, String.class);
 
-            System.out.println("========= OFS RESPONSE =========");
-            System.out.println("HTTP Status: " + responseEntity.getStatusCode());
-            System.out.println("Response Body: " + responseEntity.getBody());
-            System.out.println("=================================");
+//            System.out.println("========= OFS RESPONSE =========");
+//            System.out.println("HTTP Status: " + responseEntity.getStatusCode());
+//            System.out.println("Response Body: " + responseEntity.getBody());
+//            System.out.println("=================================");
 
 
             if (responseEntity.getStatusCode() == HttpStatus.OK) {
@@ -48,9 +48,9 @@ public class TransactAuthService {
 
                 String ofsResponse = root.path("ofsResponse").asText();
 
-                System.out.println("========= Parsed OFS Response =========");
-                System.out.println(ofsResponse);
-                System.out.println("=======================================");
+//                System.out.println("========= Parsed OFS Response =========");
+//                System.out.println(ofsResponse);
+//                System.out.println("=======================================");
 
 // Check if response has any negative indicator
                 if (ofsResponse.contains("//-")) {

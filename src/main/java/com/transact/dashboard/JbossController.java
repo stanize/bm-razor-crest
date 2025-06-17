@@ -33,7 +33,7 @@ public class JbossController {
         model.addAttribute("buttonDisabled", "Initializing".equals(status));
         model.addAttribute("jbossLog", getLogAndClear(request));
 
-        return "content/jboss"; // Load fragment only
+        return  "fragments/jboss-fragment"; // Load fragment only
     }
 
     @PostMapping("/jboss/restart")
