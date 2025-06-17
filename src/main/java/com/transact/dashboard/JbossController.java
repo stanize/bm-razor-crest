@@ -33,7 +33,7 @@ public class JbossController {
 
         String requestedWith = request.getHeader("X-Requested-With");
         boolean isAjax = "XMLHttpRequest".equals(request.getHeader("X-Requested-With"));
-        return isAjax ? "fragments/jboss-fragment" : "redirect:/transact-dashboard";
+        return "fragments/jboss-fragment";
     }
 
     @PostMapping("/jboss/restart")
