@@ -9,6 +9,9 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
+import org.springframework.web.bind.annotation.ResponseBody;
+
+
 @Controller
 @RequestMapping("/content")
 public class JbossController {
@@ -74,5 +77,11 @@ public class JbossController {
         } catch (IOException e) {
             return false;
         }
+    }
+
+    @GetMapping("/status")
+    @ResponseBody
+    public String getStatusOnly() {
+        return checkJbossStatus(); // returns "Running", "Stopped", or "Initializing"
     }
 }

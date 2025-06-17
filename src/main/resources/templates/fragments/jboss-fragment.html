@@ -1,16 +1,13 @@
 <div style="padding: 20px">
     <h2>JBoss Server Status</h2>
 
-    <div style="margin-top: 10px;">
+    <div style="margin-bottom: 15px;">
         <strong>Status:</strong>
-        <span th:text="${jbossStatus}" class="status-badge" th:classappend=" ${jbossClass}"></span>
+        <span id="jboss-status" class="status-badge">Checking...</span>
     </div>
-</div>
 
-<div style="margin-top: 20px;" th:if="${showStartButton}">
     <form method="post" action="/jboss/restart">
-        <button type="submit" class="btn btn-warning"
-                th:disabled="${buttonDisabled}">
+        <button id="restart-button" type="submit" class="btn btn-warning" disabled>
             <i class="fas fa-sync-alt"></i> Restart JBoss
         </button>
     </form>
@@ -22,20 +19,66 @@
         border-radius: 8px;
         font-weight: bold;
     }
-    .status-running {
-        background-color: #d4edda;
-        color: #155724;
-    }
-    .status-initializing {
-        background-color: #fff3cd;
-        color: #856404;
-    }
-    .status-stopped {
-        background-color: #f8d7da;
-        color: #721c24;
-    }
-    .status-error {
-        background-color: #d6d8db;
-        color: #383d41;
+    .status-running { background-color: #d4edda; color: #155724; }
+    .status-initializing { background-color: #fff3cd; color: #856404; }
+    .status-stopped { background-color: #f8d7da; color: #721c24; }
+    .status-error { background-color: #d6d8db; color: #383d41; }
+    button[disabled] {
+        opacity: 0.6;
+        cursor: not-allowed;
     }
 </style>
+
+<script>
+    let pollingInterval;
+
+    function updateJbossStatus() {
+        fetch('/content/jboss/status')
+            .then(res => res.text())
+            .then(status => {
+                const badge = document.getElementById("jboss-status");
+                const button = document.getElementById("restart-button");
+
+                badge.textContent = status;
+                badge.className = 'status-badge';
+
+                if (status === "Running") {
+                    badge.classList.add("status-running");
+                    button.disabled = false;
+                    stopPolling(); // ✅ stop here
+                } else if (status === "Stopped") {
+                    badge.classList.add("status-stopped");
+                    button.disabled = false;
+                    stopPolling(); // ✅ stop here
+                } else if (status === "Initializing") {
+                    badge.classList.add("status-initializing");
+                    button.disabled = true;
+                } else {
+                    badge.classList.add("status-error");
+                    button.disabled = true;
+                }
+            })
+            .catch(() => {
+                const badge = document.getElementById("jboss-status");
+                const button = document.getElementById("restart-button");
+                badge.textContent = "Error";
+                badge.className = "status-badge status-error";
+                button.disabled = true;
+            });
+    }
+
+    function startPolling() {
+        updateJbossStatus();
+        pollingInterval = setInterval(updateJbossStatus, 5000);
+    }
+
+    function stopPolling() {
+        if (pollingInterval) {
+            clearInterval(pollingInterval);
+            pollingInterval = null;
+        }
+    }
+
+    // Start polling on load
+    startPolling();
+</script>
