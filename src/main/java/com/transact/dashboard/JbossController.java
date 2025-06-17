@@ -9,9 +9,6 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
-import org.springframework.web.bind.annotation.ResponseBody;
-
-
 @Controller
 @RequestMapping("/content")
 public class JbossController {
@@ -37,8 +34,8 @@ public class JbossController {
         }
 
         model.addAttribute("jbossClass", cssClass);
-        model.addAttribute("showStartButton", !"Initializing".equals(status));
         model.addAttribute("buttonDisabled", "Initializing".equals(status));
+
         return "fragments/jboss-fragment";
     }
 
@@ -61,11 +58,9 @@ public class JbossController {
                     .redirectErrorStream(true)
                     .start();
             process.waitFor();
-
             String output = new String(process.getInputStream().readAllBytes()).trim();
             return "active".equals(output);
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
             return false;
         }
     }
@@ -77,11 +72,5 @@ public class JbossController {
         } catch (IOException e) {
             return false;
         }
-    }
-
-    @GetMapping("/status")
-    @ResponseBody
-    public String getStatusOnly() {
-        return checkJbossStatus(); // returns "Running", "Stopped", or "Initializing"
     }
 }
