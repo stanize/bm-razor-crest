@@ -3,163 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <title>Transact Dashboard</title>
-    <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f6f8;
-        }
-
-        .container {
-            display: flex;
-            min-height: 100vh;
-        }
-
-        .sidebar {
-            width: 250px;
-            background: linear-gradient(180deg, #2c3e50, #34495e);
-            color: #ecf0f1;
-            padding: 20px;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .sidebar h2 {
-            margin: 0 0 30px 0;
-            font-size: 24px;
-            text-align: center;
-        }
-
-        .sidebar h2 a {
-            color: #ecf0f1;
-            text-decoration: none;
-        }
-
-        .sidebar ul {
-            list-style: none;
-            padding: 0;
-            flex: 1;
-        }
-
-        .sidebar li {
-            margin: 15px 0;
-        }
-
-        .sidebar li a, .sidebar li form button {
-            display: flex;
-            align-items: center;
-            padding: 10px 15px;
-            color: #ecf0f1;
-            text-decoration: none;
-            border: none;
-            background: none;
-            font-size: 18px;
-            width: 100%;
-            text-align: left;
-            cursor: pointer;
-        }
-
-        .sidebar li a.active, .sidebar li form button.active {
-            background: #1abc9c; /* Highlight color */
-            font-weight: bold;
-        }
-
-        .sidebar li a:hover, .sidebar li form button:hover {
-            background: #2980b9;
-        }
-
-        .sidebar li a i, .sidebar li form button i {
-            margin-right: 10px;
-            font-size: 20px;
-        }
-
-        .content {
-            flex: 1;
-            padding: 40px;
-            box-sizing: border-box;
-            background-color: #f4f6f8;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-
-        .header h1 {
-            margin: 0;
-            font-size: 28px;
-            color: #2c3e50;
-        }
-
-        .message-box {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .message-box h2 {
-            margin-top: 0;
-            color: #34495e;
-        }
-
-        button {
-            padding: 12px 25px;
-            margin-top: 20px;
-            font-size: 16px;
-            background: #3498db;
-            color: white;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        button:hover {
-            background: #2980b9;
-        }
-
-        pre {
-            background: #ecf0f1;
-            padding: 15px;
-            border-radius: 5px;
-            overflow-x: auto;
-        }
-
+        body, html { margin: 0; padding: 0; height: 100%; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6f8; }
+        .container { display: flex; min-height: 100vh; }
+        .sidebar { width: 250px; background: linear-gradient(180deg, #2c3e50, #34495e); color: #ecf0f1; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; }
+        .sidebar h2 { margin: 0 0 30px 0; font-size: 24px; text-align: center; }
+        .sidebar h2 a { color: #ecf0f1; text-decoration: none; }
+        .sidebar ul { list-style: none; padding: 0; flex: 1; }
+        .sidebar li { margin: 15px 0; }
+        .sidebar li a, .sidebar li form button { display: flex; align-items: center; padding: 10px 15px; color: #ecf0f1; text-decoration: none; border: none; background: none; font-size: 18px; width: 100%; text-align: left; cursor: pointer; }
+        .sidebar li a.active, .sidebar li form button.active { background: #1abc9c; font-weight: bold; }
+        .sidebar li a:hover, .sidebar li form button:hover { background: #2980b9; }
+        .sidebar li a i, .sidebar li form button i { margin-right: 10px; font-size: 20px; }
+        .content { flex: 1; padding: 40px; box-sizing: border-box; background-color: #f4f6f8; display: flex; flex-direction: column; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .header h1 { margin: 0; font-size: 28px; color: #2c3e50; }
+        .message-box { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); }
+        .message-box h2 { margin-top: 0; color: #34495e; }
+        button { padding: 12px 25px; margin-top: 20px; font-size: 16px; background: #3498db; color: white; border: none; border-radius: 25px; cursor: pointer; transition: background 0.3s; }
+        button:hover { background: #2980b9; }
+        pre { background: #ecf0f1; padding: 15px; border-radius: 5px; overflow-x: auto; }
         @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-            }
-
-            .sidebar {
-                width: 100%;
-                flex-direction: row;
-                overflow-x: auto;
-            }
-
-            .sidebar ul {
-                display: flex;
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: space-around;
-            }
-
-            .sidebar li {
-                margin: 10px;
-            }
-
-            .content {
-                padding: 20px;
-            }
+            .container { flex-direction: column; }
+            .sidebar { width: 100%; flex-direction: row; overflow-x: auto; }
+            .sidebar ul { display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-around; }
+            .sidebar li { margin: 10px; }
+            .content { padding: 20px; }
         }
     </style>
 </head>
@@ -208,7 +78,14 @@
     }
 
     window.addEventListener('DOMContentLoaded', () => {
-        loadContent('/content/home');
+        const fragment = window.location.hash.substring(1);
+        switch (fragment) {
+            case "jboss": loadContent('/content/jboss'); break;
+            case "tsa-services": loadContent('/content/tsa-services'); break;
+            case "ofs": loadContent('/content/ofs'); break;
+            case "cob": loadContent('/content/cob'); break;
+            default: loadContent('/content/home');
+        }
     });
 </script>
 </body>

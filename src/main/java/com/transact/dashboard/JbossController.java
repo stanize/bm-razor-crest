@@ -48,7 +48,7 @@ public class JbossController {
         String requestedWith = request.getHeader("X-Requested-With");
         boolean isAjax = "XMLHttpRequest".equals(requestedWith);
 
-        return isAjax ? "fragments/jboss-fragment" : "redirect:/transact-dashboard";
+        return isAjax ? "fragments/jboss-fragment" : "redirect:/transact-dashboard#jboss";
     }
 
     @PostMapping("/jboss/restart")
@@ -60,7 +60,9 @@ public class JbossController {
         } catch (InterruptedException ignored) {}
 
         request.getSession().setAttribute("jbossLog", "JBoss restart initiated.\n\n" + output);
-        return "redirect:/content/jboss";
+
+        // 🔁 Redirect to layout with hash so JS loads the fragment correctly
+        return "redirect:/transact-dashboard#jboss";
     }
 
     private String checkJbossStatus() {
