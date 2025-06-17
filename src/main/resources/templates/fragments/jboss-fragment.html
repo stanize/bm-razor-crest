@@ -6,7 +6,10 @@
         <span th:text="${jbossStatus}" class="status-badge" th:classappend=" ${jbossClass}"></span>
     </div>
 
-    <form method="post" action="/jboss/restart">
+    <form method="post" action="/content/jboss/restart">
+        <!-- CSRF token for Spring Security -->
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
         <button type="submit" class="btn btn-warning"
                 th:disabled="${buttonDisabled}">
             <i class="fas fa-sync-alt"></i> Restart JBoss
