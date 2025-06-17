@@ -22,12 +22,16 @@ public class JbossController {
         String status = checkJbossStatus();
         model.addAttribute("jbossStatus", status);
 
-        String cssClass = switch (status) {
-            case "Running" -> "status-running";
-            case "Initializing" -> "status-initializing";
-            case "Stopped" -> "status-stopped";
-            default -> "status-error";
-        };
+        String cssClass;
+        if ("Running".equals(status)) {
+            cssClass = "status-running";
+        } else if ("Initializing".equals(status)) {
+            cssClass = "status-initializing";
+        } else if ("Stopped".equals(status)) {
+            cssClass = "status-stopped";
+        } else {
+            cssClass = "status-error";
+        }
 
         model.addAttribute("jbossClass", cssClass);
         return "fragments/jboss-fragment";
