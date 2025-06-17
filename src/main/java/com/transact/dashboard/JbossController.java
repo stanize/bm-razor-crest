@@ -39,6 +39,7 @@ public class JbossController {
     @PostMapping("/jboss/restart")
     public String restartJboss(HttpServletRequest request) {
         String output = executeCommand("sudo /bin/systemctl restart jboss");
+        System.out.println(output);
         request.getSession().setAttribute("jbossLog", "JBoss restart initiated.\n\n" + output);
         return "redirect:/content/jboss";
     }
@@ -77,6 +78,7 @@ public class JbossController {
     }
 
     private String executeCommand(String command) {
+        System.out.println(command);
         StringBuilder output = new StringBuilder();
         try {
             Process process = new ProcessBuilder("bash", "-c", command).start();
