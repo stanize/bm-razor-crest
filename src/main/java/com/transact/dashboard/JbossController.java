@@ -33,9 +33,7 @@ public class JbossController {
         model.addAttribute("buttonDisabled", "Initializing".equals(status));
         model.addAttribute("jbossLog", getLogAndClear(request));
 
-        String requestedWith = request.getHeader("X-Requested-With");
-        boolean isAjax = "XMLHttpRequest".equals(request.getHeader("X-Requested-With"));
-        return "fragments/jboss-fragment";
+        return "content/jboss"; // Load fragment only
     }
 
     @PostMapping("/jboss/restart")

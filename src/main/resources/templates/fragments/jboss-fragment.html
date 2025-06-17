@@ -6,7 +6,12 @@
         <span th:text="'Status: ' + ${jbossStatus}"></span>
     </div>
 
-    <form method="post" th:action="@{/content/jboss/restart}">
+    <form method="post" th:action="@{/jboss/restart}">
         <button type="submit" class="restart-btn" th:disabled="${buttonDisabled}">Restart JBoss</button>
     </form>
+
+    <div th:if="${jbossLog != null}" style="margin-top: 20px;">
+        <h3>Log Output:</h3>
+        <pre th:text="${jbossLog}"></pre>
+    </div>
 </div>
