@@ -3,6 +3,8 @@ package com.transact.dashboard;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.net.InetSocketAddress;
@@ -37,11 +39,14 @@ public class JbossController {
     }
 
     @PostMapping("/jboss/restart")
-    @ResponseBody
-    public String restartJboss(HttpServletRequest request) {
+    public String restartJboss(HttpServletRequest request, RedirectAttributes redirectAttributes) {
         String output = executeCommand("sudo /bin/systemctl restart jboss");
         request.getSession().setAttribute("jbossLog", "JBoss restart initiated.\n\n" + output);
-        return "OK";
+
+        redirectAttributes.addFlashAttribute("jbossStatus", "Restarting...");
+        redirectAttributes.addFlashAttribute("jbossClass", "status-restarting");
+
+        return "redirect:/content/jboss";
     }
 
     private String getLogAndClear(HttpServletRequest request) {
