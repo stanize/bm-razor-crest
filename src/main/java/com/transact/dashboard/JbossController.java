@@ -32,8 +32,8 @@ public class JbossController {
         model.addAttribute("jbossLog", getLogAndClear(request));
 
         String requestedWith = request.getHeader("X-Requested-With");
-        boolean isAjax = "XMLHttpRequest".equals(requestedWith);
-        return isAjax ? "fragments/jboss-fragment" : "redirect:/transact-dashboard#jboss";
+        boolean isAjax = "XMLHttpRequest".equals(request.getHeader("X-Requested-With"));
+        return isAjax ? "fragments/jboss-fragment" : "redirect:/transact-dashboard";
     }
 
     @PostMapping("/jboss/restart")
