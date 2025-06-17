@@ -1,22 +1,18 @@
 <div style="padding: 20px">
-    <h2>JBoss Server Control</h2>
+    <h2>JBoss Server Status</h2>
 
-    <!-- Status Section -->
-    <div style="margin-bottom: 15px;">
+    <div style="margin-top: 10px;">
         <strong>Status:</strong>
-        <span id="jboss-status" class="status-badge">Checking...</span>
+        <span th:text="${jbossStatus}"
+              th:classappend="${jbossStatus == 'Running'} ? 'status-running' :
+                              ${jbossStatus == 'Initializing'} ? 'status-initializing' :
+                              ${jbossStatus == 'Stopped'} ? 'status-stopped' : 'status-error'"
+              class="status-badge">
+            Status Placeholder
+        </span>
     </div>
-
-    <!-- Restart Button -->
-    <button class="btn btn-warning" onclick="restartJboss()">
-        <i class="fas fa-sync-alt"></i> Restart JBoss
-    </button>
-
-    <!-- Log Output -->
-    <pre id="jboss-restart-log" style="margin-top: 20px; font-family: monospace;"></pre>
 </div>
 
-<!-- Styles -->
 <style>
     .status-badge {
         padding: 4px 10px;
@@ -40,45 +36,3 @@
         color: #383d41;
     }
 </style>
-
-<!-- Script -->
-<script>
-    function updateJbossStatus() {
-        fetch('/jboss/status', { method: 'POST' })
-            .then(res => res.text())
-            .then(status => {
-                const el = document.getElementById("jboss-status");
-                el.textContent = status;
-                el.className = "status-badge"; // Reset
-
-                if (status === "Running") el.classList.add("status-running");
-                else if (status === "Initializing") el.classList.add("status-initializing");
-                else if (status === "Stopped") el.classList.add("status-stopped");
-                else el.classList.add("status-error");
-            })
-            .catch(() => {
-                const el = document.getElementById("jboss-status");
-                el.textContent = "Error";
-                el.className = "status-badge status-error";
-            });
-    }
-
-    function restartJboss() {
-        const logEl = document.getElementById("jboss-restart-log");
-        logEl.textContent = "Restarting JBoss...";
-
-        fetch('/jboss/restart', { method: 'POST' })
-            .then(res => res.text())
-            .then(msg => {
-                logEl.textContent = msg;
-                setTimeout(updateJbossStatus, 3000); // Give time for restart
-            })
-            .catch(err => {
-                logEl.textContent = "Failed to restart JBoss: " + err;
-                updateJbossStatus();
-            });
-    }
-
-    // Call on load
-    updateJbossStatus();
-</script>

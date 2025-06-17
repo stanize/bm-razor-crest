@@ -1,71 +1,63 @@
 package com.transact.dashboard;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.http.ResponseEntity;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.io.IOException;
-
-import java.net.Socket;
 import java.net.InetSocketAddress;
+import java.net.Socket;
 
 @Controller
-@RequestMapping("/jboss")
+@RequestMapping("/content")
 public class JbossController {
 
-    @PostMapping("/restart")
-    public ResponseEntity<String> restartJboss() {
-        String output = executeCommand("sudo systemctl restart jboss");
-        return ResponseEntity.ok("JBoss restart initiated.\n\n" + output);
+    private final String JBossService = "jboss";
+    private final String JBossHost = "localhost";
+    private final int JBossPort = 8080;
+
+    @GetMapping("/jboss")
+    public String jbossPage(Model model) {
+        String status = checkJbossStatus();
+        model.addAttribute("jbossStatus", status);
+        return "fragments/jboss-fragment";
     }
 
-    @PostMapping("/status")
-    public ResponseEntity<String> checkStatus() {
-        String service = "jboss";
+    private String checkJbossStatus() {
+        boolean isActive = isServiceActive();
+        boolean socketOpen = isSocketOpen();
 
-        String status = "Stopped";
-        try {
-            Process process = new ProcessBuilder("systemctl", "is-active", service).start();
-            process.waitFor();
-            String state = new String(process.getInputStream().readAllBytes()).trim();
-
-            boolean isSocketOpen = false;
-            try (Socket socket = new Socket()) {
-                socket.connect(new InetSocketAddress("localhost", 8080), 1000);
-                isSocketOpen = true;
-            } catch (IOException ignored) {}
-
-            if ("active".equals(state) && isSocketOpen) {
-                status = "Running";
-            } else if ("active".equals(state)) {
-                status = "Initializing";
-            }
-        } catch (Exception e) {
-            status = "Error";
+        if (isActive && socketOpen) {
+            return "Running";
+        } else if (isActive) {
+            return "Initializing";
+        } else {
+            return "Stopped";
         }
-
-        return ResponseEntity.ok(status);
     }
 
-    private String executeCommand(String command) {
-        StringBuilder output = new StringBuilder();
+    private boolean isServiceActive() {
         try {
-            ProcessBuilder builder = new ProcessBuilder("bash", "-c", command);
-            Process process = builder.start();
-            try (BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(process.getInputStream()))) {
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    output.append(line).append("\n");
-                }
-            }
+            Process process = new ProcessBuilder("systemctl", "is-active", JBossService)
+                    .redirectErrorStream(true)
+                    .start();
             process.waitFor();
+
+            String output = new String(process.getInputStream().readAllBytes()).trim();
+            return "active".equals(output);
         } catch (IOException | InterruptedException e) {
-            output.append("Error: ").append(e.getMessage());
+            e.printStackTrace();
+            return false;
         }
-        return output.toString();
+    }
+
+    private boolean isSocketOpen() {
+        try (Socket socket = new Socket()) {
+            socket.connect(new InetSocketAddress(JBossHost, JBossPort), 1000);
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
     }
 }
