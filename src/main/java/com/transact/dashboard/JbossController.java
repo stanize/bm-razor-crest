@@ -6,7 +6,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
@@ -19,7 +22,7 @@ public class JbossController {
     private final int JBossPort = 8080;
 
     @GetMapping("/jboss")
-    public String jbossPage(Model model) {
+    public String jbossPage(Model model, HttpServletRequest request) {
         String status = checkJbossStatus();
         model.addAttribute("jbossStatus", status);
 
@@ -37,18 +40,23 @@ public class JbossController {
         model.addAttribute("jbossClass", cssClass);
         model.addAttribute("buttonDisabled", "Initializing".equals(status));
 
+        // Optional: show logs after restart
+        Object log = request.getSession().getAttribute("jbossLog");
+        model.addAttribute("jbossLog", log != null ? log.toString() : "");
+        request.getSession().removeAttribute("jbossLog");
+
         return "fragments/jboss-fragment";
     }
 
     @PostMapping("/jboss/restart")
-    public String restartJboss() {
-        executeCommand("sudo systemctl restart jboss");
+    public String restartJboss(HttpServletRequest request) {
+        String output = executeCommand("sudo /bin/systemctl restart jboss");
 
-        // Optional: wait for 2 seconds to let the service restart
         try {
-            Thread.sleep(2000);
+            Thread.sleep(2000); // wait to stabilize
         } catch (InterruptedException ignored) {}
 
+        request.getSession().setAttribute("jbossLog", "JBoss restart initiated.\n\n" + output);
         return "redirect:/content/jboss";
     }
 
@@ -87,11 +95,23 @@ public class JbossController {
         }
     }
 
-    private void executeCommand(String command) {
+    private String executeCommand(String command) {
+        StringBuilder output = new StringBuilder();
         try {
             ProcessBuilder builder = new ProcessBuilder("bash", "-c", command);
+            builder.redirectErrorStream(true);
             Process process = builder.start();
+            try (BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(process.getInputStream()))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    output.append(line).append("\n");
+                }
+            }
             process.waitFor();
-        } catch (IOException | InterruptedException ignored) {}
+        } catch (IOException | InterruptedException e) {
+            output.append("Error: ").append(e.getMessage());
+        }
+        return output.toString();
     }
 }
