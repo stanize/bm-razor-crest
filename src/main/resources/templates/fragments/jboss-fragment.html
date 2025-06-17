@@ -1,28 +1,12 @@
-<h2>JBoss Server Status</h2>
+<div class="message-box">
+    <h2>JBoss</h2>
+    <p>Overview and management of JBoss server.</p>
 
-<div th:class="'status-box ' + ${jbossClass}">
-    <span th:text="'Status: ' + ${jbossStatus}"></span>
+    <div th:class="'status-box ' + ${jbossClass}">
+        <span th:text="'Status: ' + ${jbossStatus}"></span>
+    </div>
+
+    <form method="post" th:action="@{/content/jboss/restart}">
+        <button type="submit" class="restart-btn" th:disabled="${buttonDisabled}">Restart JBoss</button>
+    </form>
 </div>
-
-<button id="restartBtn" class="restart-btn" th:disabled="${buttonDisabled}">Restart JBoss</button>
-
-<div th:if="${jbossLog != null && !#strings.isEmpty(jbossLog)}" style="margin-top: 20px;">
-    <h3>Restart Log:</h3>
-    <pre th:text="${jbossLog}"></pre>
-</div>
-
-<script>
-    document.getElementById('restartBtn').addEventListener('click', function () {
-        this.disabled = true;
-        fetch('/content/jboss/restart', { method: 'POST' })
-            .then(() => {
-                setTimeout(() => {
-                    loadContent('/content/jboss'); // Reload after restart
-                }, 1500); // Give time to restart
-            })
-            .catch(err => {
-                console.error("Restart failed", err);
-                this.disabled = false;
-            });
-    });
-</script>
