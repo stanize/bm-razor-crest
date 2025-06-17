@@ -24,11 +24,11 @@ public class TransactAuthService {
             String ofsRequest = String.format("ENQUIRY.SELECT,,%s/%s,%%USER,SIGN.ON.NAME:=%s", username, password, username);
             String jsonBody = String.format("{\"ofsRequest\":\"%s\"}", ofsRequest);
 
-            System.out.println("========= OFS REQUEST =========");
-            System.out.println("POST URL: " + TRANSACT_URL);
-            System.out.println("POST Headers: " + headers);
-            System.out.println("POST Body: " + jsonBody);
-            System.out.println("================================");
+//            System.out.println("========= OFS REQUEST =========");
+//            System.out.println("POST URL: " + TRANSACT_URL);
+//            System.out.println("POST Headers: " + headers);
+//            System.out.println("POST Body: " + jsonBody);
+//            System.out.println("================================");
 
             HttpEntity<String> requestEntity = new HttpEntity<>(jsonBody, headers);
 

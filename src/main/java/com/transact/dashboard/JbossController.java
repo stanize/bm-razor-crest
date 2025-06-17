@@ -37,13 +37,9 @@ public class JbossController {
     }
 
     @PostMapping("/jboss/restart")
-    public String restartJboss(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+    public String restartJboss(HttpServletRequest request) {
         String output = executeCommand("sudo /bin/systemctl restart jboss");
         request.getSession().setAttribute("jbossLog", "JBoss restart initiated.\n\n" + output);
-
-        redirectAttributes.addFlashAttribute("jbossStatus", "Restarting...");
-        redirectAttributes.addFlashAttribute("jbossClass", "status-restarting");
-
         return "redirect:/content/jboss";
     }
 
