@@ -1,4 +1,28 @@
-<div class="message-box">
-    <h2>JBoss Management</h2>
-    <p>Manage and monitor your JBoss servers here.</p>
+<div style="padding: 20px">
+    <h2>JBoss Server Controls</h2>
+    <p>You can start or stop the JBoss server from here.</p>
+
+    <button class="btn btn-success" onclick="startJBoss()" style="margin-right: 10px;">
+        <i class="fas fa-play"></i> Start JBoss
+    </button>
+
+    <button class="btn btn-danger" onclick="stopJBoss()">
+        <i class="fas fa-stop"></i> Stop JBoss
+    </button>
 </div>
+
+<script>
+    function startJBoss() {
+        fetch('/jboss/start', { method: 'POST' })
+            .then(res => res.text())
+            .then(msg => alert(msg))
+            .catch(err => alert("Failed to start JBoss: " + err));
+    }
+
+    function stopJBoss() {
+        fetch('/jboss/stop', { method: 'POST' })
+            .then(res => res.text())
+            .then(msg => alert(msg))
+            .catch(err => alert("Failed to stop JBoss: " + err));
+    }
+</script>
