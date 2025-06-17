@@ -8,7 +8,7 @@
 
     <form method="post" th:action="@{/jboss/restart}">
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-        <button type="submit" class="restart-btn" th:disabled="${buttonDisabled}">Restart JBoss</button>
+        <button type="submit" class="restart-btn">Restart JBoss</button>
     </form>
 
 

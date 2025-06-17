@@ -38,6 +38,8 @@ public class JbossController {
 
     @PostMapping("/jboss/restart")
     public String restartJboss(HttpServletRequest request) {
+        System.out.println("=== JBoss Restart Triggered ===");
+
         String output = executeCommand("sudo /bin/systemctl restart jboss");
         System.out.println(output);
         request.getSession().setAttribute("jbossLog", "JBoss restart initiated.\n\n" + output);
