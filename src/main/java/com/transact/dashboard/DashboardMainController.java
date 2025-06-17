@@ -18,10 +18,10 @@ public class DashboardMainController {
         return "transact-dashboard"; // Full page
     }
 
-    @GetMapping("/content/jboss")
-    public String loadJbossFragment() {
-        return "fragments/jboss-fragment";
-    }
+//    @GetMapping("/content/jboss")
+//    public String loadJbossFragment() {
+//        return "fragments/jboss-fragment";
+//    }
 
     @GetMapping("/content/tsa-services")
     public String loadTsaServicesFragment() {
