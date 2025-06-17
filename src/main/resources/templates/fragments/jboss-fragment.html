@@ -3,13 +3,7 @@
 
     <div style="margin-top: 10px;">
         <strong>Status:</strong>
-        <span th:text="${jbossStatus}"
-              th:classappend="${jbossStatus == 'Running'} ? 'status-running' :
-                              ${jbossStatus == 'Initializing'} ? 'status-initializing' :
-                              ${jbossStatus == 'Stopped'} ? 'status-stopped' : 'status-error'"
-              class="status-badge">
-            Status Placeholder
-        </span>
+        <span th:text="${jbossStatus}" class="status-badge" th:classappend=" ${jbossClass}"></span>
     </div>
 </div>
 
