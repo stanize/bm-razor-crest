@@ -34,6 +34,8 @@ public class JbossController {
         }
 
         model.addAttribute("jbossClass", cssClass);
+        model.addAttribute("showStartButton", !"Initializing".equals(status));
+        model.addAttribute("buttonDisabled", "Initializing".equals(status));
         return "fragments/jboss-fragment";
     }
 

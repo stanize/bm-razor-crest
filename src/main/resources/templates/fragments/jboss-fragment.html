@@ -7,6 +7,15 @@
     </div>
 </div>
 
+<div style="margin-top: 20px;" th:if="${showStartButton}">
+    <form method="post" action="/jboss/restart">
+        <button type="submit" class="btn btn-warning"
+                th:disabled="${buttonDisabled}">
+            <i class="fas fa-sync-alt"></i> Restart JBoss
+        </button>
+    </form>
+</div>
+
 <style>
     .status-badge {
         padding: 4px 10px;
