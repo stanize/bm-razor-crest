@@ -135,7 +135,6 @@
             overflow-x: auto;
         }
 
-        /* Responsive design for mobile */
         @media (max-width: 768px) {
             .container {
                 flex-direction: column;
@@ -181,41 +180,8 @@
         </ul>
     </div>
     <div class="content" id="main-content">
-        <div class="header">
-            <!-- No more hardcoded <h1> here -->
-        </div>
-
-        <div id="content-area">
-            <!-- Home content will load here dynamically -->
-        </div>
-
-        <script>
-            function loadContent(url, element) {
-                fetch(url)
-                    .then(response => response.text())
-                    .then(html => {
-                        document.getElementById('content-area').innerHTML = html;
-                        setActiveLink(element);
-                    })
-                    .catch(error => {
-                        console.error('Error loading content:', error);
-                        document.getElementById('content-area').innerHTML = "<p>Error loading content.</p>";
-                    });
-            }
-
-            function setActiveLink(clickedElement) {
-                const links = document.querySelectorAll('#sidebar-links a');
-                links.forEach(link => link.classList.remove('active'));
-                if (clickedElement) {
-                    clickedElement.classList.add('active');
-                }
-            }
-
-            // ✅ Load Home Fragment on Page Load
-            window.addEventListener('DOMContentLoaded', (event) => {
-                loadContent('/content/home');
-            });
-        </script>
+        <div class="header"></div>
+        <div id="content-area"></div>
     </div>
 </div>
 
@@ -240,6 +206,10 @@
             clickedElement.classList.add('active');
         }
     }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        loadContent('/content/home');
+    });
 </script>
 </body>
 </html>
