@@ -25,6 +25,7 @@ public class SecurityConfig {
                 .authenticationProvider(transactAuthenticationProvider)
                 .authorizeRequests()
                 .antMatchers("/transact-dashboard-login", "/css/**").permitAll()
+                .antMatchers("/jboss/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
