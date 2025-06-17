@@ -40,12 +40,15 @@ public class JbossController {
         model.addAttribute("jbossClass", cssClass);
         model.addAttribute("buttonDisabled", "Initializing".equals(status));
 
-        // Optional: show logs after restart
         Object log = request.getSession().getAttribute("jbossLog");
         model.addAttribute("jbossLog", log != null ? log.toString() : "");
         request.getSession().removeAttribute("jbossLog");
 
-        return "fragments/jboss-fragment";
+        // Detect if this is a direct browser request (not AJAX)
+        String requestedWith = request.getHeader("X-Requested-With");
+        boolean isAjax = "XMLHttpRequest".equals(requestedWith);
+
+        return isAjax ? "fragments/jboss-fragment" : "redirect:/transact-dashboard";
     }
 
     @PostMapping("/jboss/restart")
